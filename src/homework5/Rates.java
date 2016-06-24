@@ -1,26 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package com.rbevans.bookingrate;
+package homework5;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/** Rates is an object that provides a cost for a booked tour.  
- * There is a base rate and a premium rate that are used to calculate 
- * the cost of the tour.  Weekdays use the base rate, weekends use the
- * premium rate.
- *
- * The premium rate is automatically generated as 1.5x the base rate
- *
- * @author evansrb1
- */
+
 public class Rates {
     public static enum HIKE {GARDINER, HELLROARING, BEATEN};
-    private HIKE hike;
+    HIKE hike;
     // flag to indicate total rate and day types need to be recalculated
     private boolean synched=false;
     // weekday rate
@@ -48,28 +35,28 @@ public class Rates {
     private int seasonEndDay = 1;    
     
     private String details = "none";
-    private int[] validDurations = null;
+    int[] validDurations = new int[3];
 
     public Rates(HIKE hike ) {
         this.hike = hike;
         switch(hike) {
             case GARDINER:
                 baseRate=4000;
-                validDurations = new int[2];
+                //validDurations = new int[2];
                 validDurations[0] = 3;
                 validDurations[1] = 5;
                 break;
             case HELLROARING:
                 baseRate=3500;
                 
-                validDurations = new int[3];
+                //validDurations = new int[3];
                 validDurations[0] = 2;
                 validDurations[1] = 3;
                 validDurations[2] = 4;
                 break;
             case BEATEN:
                 baseRate=4500;                
-                validDurations = new int[2];
+                //validDurations = new int[2];
                 validDurations[0] = 5;
                 validDurations[1] = 7;
                 break;
@@ -77,7 +64,11 @@ public class Rates {
         premiumRate = baseRate + (baseRate / 2);
     }
 
-    /** Get the total cost for the trip.  Returns -0.01 is something is amiss.
+    public Rates() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/** Get the total cost for the trip.  Returns -0.01 is something is amiss.
      * 
      * @return the cost of the trip
      */
@@ -340,3 +331,4 @@ public class Rates {
         }
     }
 }
+

@@ -1,18 +1,4 @@
-/*
- * A simple object to keep represent a Day.  It has getter and setters for day,
- * month and year so that it can be used as a bean.
- *
- * getDate() returns a GregorianCalendar object that can be used for date
- * calcualtions
- *
- * isValidDate() is used to see if the day/month/year is a valid date
- * getValidationStatus() returns a string message for problems
- *
- * Internally, months are from 0-11 (like the GregorianCalendar) but externally
- * they run 1-12
- */
-
-package com.rbevans.bookingrate;
+package homework5;
 
 import java.util.GregorianCalendar;
 
