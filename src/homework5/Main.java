@@ -43,6 +43,7 @@ public class Main extends JFrame {
 		
 		setLayout(new GridBagLayout()); //Layout for the frame;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Beartooth Hiking Company Tour Cost Calculator");
 		
 		//initialize Labels
 		
@@ -50,7 +51,7 @@ public class Main extends JFrame {
 		duration = new JLabel("Select duration (Days): ");
 		startDate = new JLabel("Enter Start Date: ");
 		cost = new JLabel("Cost: ");
-		costText = new JLabel("HAHAHAHAHA"); // place holder
+		costText = new JLabel(""); // place holder
 		
 		//Initialize Buttons & add them to proper group
 		
@@ -212,6 +213,8 @@ public class Main extends JFrame {
 			
 		});
 		
+		
+		
 		submit.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent evt){
@@ -219,68 +222,100 @@ public class Main extends JFrame {
 				int m = -1;
 				int d = -1;
 				int y = -1;
-				int length = Integer.parseInt(Character.toString(durationText.charAt(0)));
-				System.out.println(length);
 				
 				try{
-				
-					 m = Integer.parseInt(month.getText());
-					 d = Integer.parseInt(day.getText());
-					 y = Integer.parseInt(year.getText());
-					 
-					 BookingDay start = new BookingDay(y,m,d);
-					 
 					
-					 if(start.isValidDate()){
+					int length = Integer.parseInt(Character.toString(durationText.charAt(0)));
+					
+					try{
+					
+						 m = Integer.parseInt(month.getText());
+						 d = Integer.parseInt(day.getText());
+						 y = Integer.parseInt(year.getText());
 						 
-						 rate.setBeginDate(start);
+						 BookingDay start = new BookingDay(y,m,d);
 						 
-						 if(rate.setDuration(length)){
+						
+						 if(start.isValidDate()){
 							 
-							 if(rate.isValidDates()){
+							 rate.setBeginDate(start);
 							 
-								costText.setText(String.format("$%.2f", rate.getCost()));
-								costText.setVisible(true);
-								
+							 if(rate.setDuration(length)){
+								 
+								 if(rate.isValidDates()){
+								 
+									costText.setText(String.format("$%.2f", rate.getCost()));
+									costText.setVisible(true);
+									
+								 }else{
+									 
+									 JFrame errorFrame = new JFrame();
+									 errorFrame.setTitle("Uh Oh!");
+									 errorFrame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+									 JLabel errorInfo = new JLabel("The start date and duration combination you selected is not within the tour season! Please Try again :)");
+									 errorFrame.add(errorInfo);
+									 errorFrame.pack();
+									 errorFrame.setVisible(true);
+									 
+								 }
+								 
 							 }else{
 								 
+								 // Shouldn't need this code since we limit the choices.
 								 JFrame errorFrame = new JFrame();
 								 errorFrame.setTitle("Uh Oh!");
-								 errorFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-								 JLabel errorInfo = new JLabel("The start date and duration you selected is not within the tour season! Please Try again :)");
+								 errorFrame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+								 JLabel errorInfo = new JLabel("You selected an invalid Trip Duration!");
 								 errorFrame.add(errorInfo);
+								 errorFrame.pack();
 								 errorFrame.setVisible(true);
-								 
+	
 							 }
 							 
 						 }else{
 							 
-							 // Shouldn't need this code since we limit the choices.
 							 JFrame errorFrame = new JFrame();
 							 errorFrame.setTitle("Uh Oh!");
-							 JLabel errorInfo = new JLabel("You selected an invalid Trip Duration!");
+							 errorFrame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+							 JLabel errorInfo = new JLabel("The start date you selected is not within the valid range.");
 							 errorFrame.add(errorInfo);
-
+							 errorFrame.pack();
+							 errorFrame.setVisible(true);
+							 
+							 
 						 }
-						 
-					 }else{
-						 
-						 
-						 
-					 }
-				
-				} catch(Exception e){
 					
-					System.out.println("Error invalid date format entered.");
-					e.printStackTrace();
+					} catch(Exception e){
+						
+						 JFrame errorFrame = new JFrame();
+						 errorFrame.setTitle("Uh Oh!");
+						 errorFrame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+						 JLabel errorInfo = new JLabel("The date format was not correct. The format is (MM/DD/YYYY)");
+						 errorFrame.add(errorInfo);
+						 errorFrame.pack();
+						 errorFrame.setVisible(true);
+						
+					}
+					
+				}catch(Exception e){
+					
+					 JFrame errorFrame = new JFrame();
+					 errorFrame.setTitle("Uh Oh!");
+					 errorFrame.setDefaultCloseOperation(HIDE_ON_CLOSE);
+					 JLabel errorInfo = new JLabel("Please select a Trail then a duration.");
+					 errorFrame.add(errorInfo);
+					 errorFrame.pack();
+					 errorFrame.setVisible(true);
 					
 				}
 				
-				
-				
+					
 			}
+				
 			
 		});
+		
+		
 		
 		pack();
 		setVisible(true);
